@@ -1,0 +1,724 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Gallery from '../components/Gallery.astro';
+import ContactForm from '../components/ContactForm.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { property } from '../data/property';
+---
+
+<Layout 
+  title={`${property.title} | $250/mes - La Siesta de Tocumen`}
+  description={`Alquiler de apartamento en La Siesta de Tocumen. 200 m², 1 baño privado, área de lavado, entrada independiente. Precio $250 negociable con 50% de depósito.`}
+>
+  <div class="details-page">
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumb-nav" aria-label="Ruta de navegación">
+        <ol class="breadcrumbs">
+          <li><a href="/">Inicio</a></li>
+          <li class="separator"><span class="material-symbols-outlined">chevron_right</span></li>
+          <li><a href="/#inmueble">Tocumen</a></li>
+          <li class="separator"><span class="material-symbols-outlined">chevron_right</span></li>
+          <li class="current" aria-current="page">Apartamento en La Siesta</li>
+        </ol>
+      </nav>
+
+      <!-- Main Layout: Content (flex) + Sidebar (340px) -->
+      <div class="details-layout">
+        <!-- Main Content Column -->
+        <div class="main-column">
+          <!-- Property Header -->
+          <header class="property-header">
+            <div class="header-badges">
+              <span class="badge badge-exclusive">Disponible</span>
+              <span class="badge badge-promo">50% de Depósito para Ingresar</span>
+            </div>
+            
+            <h1 class="property-title">{property.title}</h1>
+            
+            <p class="property-address">
+              <span class="material-symbols-outlined">location_on</span>
+              <span>{property.location.fullAddress}</span>
+            </p>
+          </header>
+
+          <!-- Interactive Gallery (8 photos) -->
+          <section class="gallery-wrapper" aria-label="Galería de fotos del apartamento">
+            <Gallery images={property.images} />
+          </section>
+
+          <!-- Quick Specifications Grid -->
+          <section class="features-section">
+            <h2 class="section-subtitle">Características Principales</h2>
+            <div class="features-grid">
+              <div class="feature-card">
+                <span class="material-symbols-outlined feature-icon">square_foot</span>
+                <span class="feature-val">{property.area} {property.areaUnit}</span>
+                <span class="feature-lbl">Espacio Total</span>
+              </div>
+              <div class="feature-card">
+                <span class="material-symbols-outlined feature-icon">shower</span>
+                <span class="feature-val">{property.bathrooms}</span>
+                <span class="feature-lbl">Baño Completo</span>
+              </div>
+              <div class="feature-card">
+                <span class="material-symbols-outlined feature-icon">group</span>
+                <span class="feature-val">Hasta {property.maxOccupancy}</span>
+                <span class="feature-lbl">Personas (Parejas)</span>
+              </div>
+              <div class="feature-card">
+                <span class="material-symbols-outlined feature-icon">door_front</span>
+                <span class="feature-val">100%</span>
+                <span class="feature-lbl">Independiente</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Description Section -->
+          <section class="content-card description-card">
+            <h2 class="section-subtitle">Acerca de este apartamento</h2>
+            <div class="prose-content">
+              <p>
+                {property.description}
+              </p>
+              <p>
+                Ubicado estratégicamente en <strong>La Siesta de Tocumen (Calle Amador)</strong>, este espacio ofrece un ambiente agradable, seguro y accesible. Diseñado con entrada totalmente independiente para brindarte absoluta tranquilidad y autonomía.
+              </p>
+            </div>
+          </section>
+
+          <!-- Amenities & Conditions Checklist -->
+          <section class="content-card amenities-card">
+            <h2 class="section-subtitle">Comodidades y Condiciones</h2>
+            <div class="amenities-grid">
+              {property.features.map((feat) => (
+                <div class="amenity-item">
+                  <div class="amenity-icon">
+                    <span class="material-symbols-outlined">{feat.icon}</span>
+                  </div>
+                  <div>
+                    <strong class="amenity-title">{feat.title}</strong>
+                    <p class="amenity-desc">{feat.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <!-- Rules & Requirements -->
+          <section class="content-card rules-card" id="requisitos">
+            <h2 class="section-subtitle">Requisitos y Normas de Convivencia</h2>
+            <div class="rules-list">
+              <div class="rule-item">
+                <span class="material-symbols-outlined rule-icon success">check_circle</span>
+                <div>
+                  <strong>Promoción en Depósito:</strong> Solo se abona la mitad del valor del depósito para ingresar ($125).
+                </div>
+              </div>
+              <div class="rule-item">
+                <span class="material-symbols-outlined rule-icon success">check_circle</span>
+                <div>
+                  <strong>Ocupación:</strong> Máximo 3 personas. Ideal y preferible para parejas o trabajadores responsables.
+                </div>
+              </div>
+              <div class="rule-item">
+                <span class="material-symbols-outlined rule-icon warning">pets</span>
+                <div>
+                  <strong>Política de Mascotas:</strong> Se aceptan únicamente gatos y perros de raza chica. <em>No se admiten mascotas grandes.</em>
+                </div>
+              </div>
+              <div class="rule-item">
+                <span class="material-symbols-outlined rule-icon success">check_circle</span>
+                <div>
+                  <strong>Servicios:</strong> Área de lavado exclusiva para mayor comodidad en el hogar.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Location & Google Maps Card -->
+          <section class="content-card location-card" id="ubicacion">
+            <div class="location-header">
+              <div>
+                <h2 class="section-subtitle">Ubicación y Entorno</h2>
+                <p class="location-text">
+                  Calle Amador, Barriada La Siesta, Corregimiento de Tocumen, Ciudad de Panamá, Panamá.
+                </p>
+              </div>
+              <a 
+                href={property.location.googleMapsUrl}
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn btn-primary"
+              >
+                <span class="material-symbols-outlined">map</span>
+                <span>Abrir en Google Maps</span>
+              </a>
+            </div>
+
+            <!-- Simulated Map Preview with Callout -->
+            <div class="map-preview-box">
+              <div class="map-illustration">
+                <div class="map-pin-pulse">
+                  <div class="pin-marker">
+                    <span class="material-symbols-outlined">home</span>
+                  </div>
+                </div>
+                <div class="map-overlay-info">
+                  <span class="map-location-tag">La Siesta, Tocumen</span>
+                  <span class="map-street-tag">Calle Amador</span>
+                </div>
+              </div>
+              <div class="map-footer">
+                <span class="map-footer-text">
+                  Fácil conexión con transporte público, comercios y vías principales de Tocumen.
+                </span>
+                <a 
+                  href={property.location.googleMapsUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="map-direct-link"
+                >
+                  Ver ruta exacta &rarr;
+                </a>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Sticky Sidebar Column -->
+        <aside class="sidebar-column">
+          <div class="sidebar-sticky">
+            <!-- Price & Direct Action Box -->
+            <div class="sidebar-card price-action-card">
+              <div class="price-header">
+                <div>
+                  <span class="price-label">Precio de alquiler</span>
+                  <div class="price-main">
+                    <span class="price-value">{property.priceFormatted}</span>
+                    <span class="price-cycle">/ mes</span>
+                  </div>
+                </div>
+                <span class="price-note-badge">{property.priceNote}</span>
+              </div>
+
+              <div class="promo-callout">
+                <span class="material-symbols-outlined">celebration</span>
+                <p><strong>Promoción:</strong> Mitad del depósito para ingresar.</p>
+              </div>
+
+              <div class="sidebar-actions">
+                <WhatsAppButton size="lg" text="Chatear por WhatsApp" className="w-full" />
+                <a href="#contacto" class="btn btn-secondary w-full">
+                  <span class="material-symbols-outlined">mail</span>
+                  <span>Llenar Formulario</span>
+                </a>
+              </div>
+
+              <p class="sidebar-tip">
+                Respuesta inmediata por WhatsApp. Horario de atención flexible.
+              </p>
+            </div>
+
+            <!-- Contact Form Embed -->
+            <div id="contacto">
+              <ContactForm />
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .details-page {
+    padding: 1.25rem 0 3rem;
+  }
+
+  /* Breadcrumbs */
+  .breadcrumb-nav {
+    margin-bottom: 1.15rem;
+  }
+
+  .breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--color-nordic-muted);
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--color-mosque);
+  }
+
+  .breadcrumbs .separator span {
+    font-size: 0.9rem;
+    vertical-align: middle;
+  }
+
+  .breadcrumbs .current {
+    color: var(--color-nordic);
+    font-weight: 600;
+  }
+
+  /* Layout Grid */
+  .details-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 1.75rem;
+    align-items: start;
+  }
+
+  .main-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Header */
+  .property-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .header-badges {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.15rem;
+  }
+
+  .property-title {
+    font-size: clamp(1.65rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--color-nordic);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .property-address {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--color-nordic-muted);
+    font-size: 0.875rem;
+  }
+
+  .property-address span:first-child {
+    color: var(--color-mosque);
+    font-size: 1.05rem;
+  }
+
+  /* Gallery Wrapper */
+  .gallery-wrapper {
+    width: 100%;
+  }
+
+  /* Features Grid */
+  .features-section {
+    background-color: var(--color-white);
+    padding: 1.5rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  .section-subtitle {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-nordic);
+    margin-bottom: 1rem;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+  }
+
+  .feature-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0.75rem;
+    background-color: var(--color-mosque-subtle);
+    border: 1px solid rgba(0, 102, 85, 0.12);
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+
+  :global([data-theme="dark"]) .feature-card {
+    border-color: rgba(13, 211, 172, 0.18);
+  }
+
+  .feature-icon {
+    font-size: 24px;
+    color: var(--color-mosque);
+    margin-bottom: 0.35rem;
+  }
+
+  .feature-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-nordic);
+    line-height: 1.2;
+  }
+
+  .feature-lbl {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--color-nordic-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 0.2rem;
+  }
+
+  /* Generic Content Card */
+  .content-card {
+    background-color: var(--color-white);
+    padding: 1.5rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  .prose-content p {
+    color: var(--color-nordic-muted);
+    font-size: 0.925rem;
+    line-height: 1.6;
+    margin-bottom: 0.85rem;
+  }
+
+  .prose-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .prose-content strong {
+    color: var(--color-nordic);
+  }
+
+  /* Amenities */
+  .amenities-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .amenity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .amenity-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-md);
+    background-color: var(--color-mosque-light);
+    color: var(--color-mosque);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .amenity-icon span {
+    font-size: 18px;
+  }
+
+  .amenity-title {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--color-nordic);
+    line-height: 1.3;
+  }
+
+  .amenity-desc {
+    font-size: 0.78rem;
+    color: var(--color-nordic-muted);
+  }
+
+  /* Rules */
+  .rules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .rule-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.65rem 0.85rem;
+    border-radius: var(--radius-md);
+    background-color: var(--color-clear-day);
+    font-size: 0.875rem;
+    color: var(--color-nordic);
+  }
+
+  .rule-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .rule-icon.success {
+    color: var(--color-mosque);
+  }
+
+  .rule-icon.warning {
+    color: #e65100;
+  }
+
+  :global([data-theme="dark"]) .rule-icon.warning {
+    color: #ff9800;
+  }
+
+  /* Location Section */
+  .location-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .location-text {
+    color: var(--color-nordic-muted);
+    font-size: 0.875rem;
+    max-width: 480px;
+  }
+
+  .map-preview-box {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+  }
+
+  .map-illustration {
+    position: relative;
+    height: 180px;
+    background: 
+      linear-gradient(rgba(238, 246, 246, 0.85), rgba(238, 246, 246, 0.9)),
+      repeating-linear-gradient(0deg, #e1ebeb, #e1ebeb 1px, transparent 1px, transparent 40px),
+      repeating-linear-gradient(90deg, #e1ebeb, #e1ebeb 1px, transparent 1px, transparent 40px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global([data-theme="dark"]) .map-illustration {
+    background: 
+      linear-gradient(rgba(12, 27, 24, 0.9), rgba(12, 27, 24, 0.95)),
+      repeating-linear-gradient(0deg, #18332d, #18332d 1px, transparent 1px, transparent 40px),
+      repeating-linear-gradient(90deg, #18332d, #18332d 1px, transparent 1px, transparent 40px);
+  }
+
+  .map-pin-pulse {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pin-marker {
+    width: 42px;
+    height: 42px;
+    background-color: var(--color-mosque);
+    color: #FFFFFF;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(0, 102, 85, 0.4);
+    border: 2px solid var(--color-white);
+    animation: bounce 2s infinite ease-in-out;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .map-overlay-info {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 0.75rem;
+    background-color: var(--color-white);
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .map-location-tag {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-nordic);
+  }
+
+  .map-street-tag {
+    font-size: 0.7rem;
+    color: var(--color-nordic-muted);
+  }
+
+  .map-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1rem;
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-border);
+    font-size: 0.825rem;
+  }
+
+  .map-footer-text {
+    color: var(--color-nordic-muted);
+  }
+
+  .map-direct-link {
+    color: var(--color-mosque);
+    font-weight: 600;
+    white-space: nowrap;
+    margin-left: 0.85rem;
+  }
+
+  .map-direct-link:hover {
+    text-decoration: underline;
+  }
+
+  /* ==========================================================================
+     Sidebar
+     ========================================================================== */
+  .sidebar-sticky {
+    position: sticky;
+    top: 84px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .price-action-card {
+    background-color: var(--color-white);
+    padding: 1.35rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  .price-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .price-label {
+    font-size: 0.7rem;
+    color: var(--color-nordic-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .price-main {
+    display: flex;
+    align-items: baseline;
+    gap: 0.2rem;
+  }
+
+  .price-value {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: var(--color-mosque);
+  }
+
+  .price-cycle {
+    font-size: 0.875rem;
+    color: var(--color-nordic-muted);
+  }
+
+  .price-note-badge {
+    background-color: var(--color-mosque-light);
+    color: var(--color-mosque);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .promo-callout {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 0.85rem;
+    background-color: var(--color-mosque-light);
+    border: 1px dashed var(--color-mosque);
+    border-radius: var(--radius-md);
+    color: var(--color-mosque);
+    font-size: 0.825rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .promo-callout span {
+    font-size: 1.15rem;
+    flex-shrink: 0;
+  }
+
+  .sidebar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+
+  .sidebar-tip {
+    font-size: 0.75rem;
+    color: var(--color-nordic-muted);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  /* Responsive Queries */
+  @media (max-width: 1024px) {
+    .details-layout {
+      grid-template-columns: 1fr;
+    }
+    .sidebar-sticky {
+      position: static;
+    }
+    .features-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .property-title {
+      font-size: 1.6rem;
+    }
+    .amenities-grid {
+      grid-template-columns: 1fr;
+    }
+    .location-header {
+      flex-direction: column;
+    }
+    .map-footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+    .map-direct-link {
+      margin-left: 0;
+    }
+  }
+</style>

@@ -1,0 +1,407 @@
+---
+interface Props {
+  className?: string;
+}
+
+const { className = '' } = Astro.props;
+---
+
+<div class={`contact-form-card ${className}`} id="contact-form-container">
+  <div class="form-header">
+    <div class="form-icon">
+      <span class="material-symbols-outlined">mail</span>
+    </div>
+    <div>
+      <h3 class="form-title">Enviar Mensaje</h3>
+      <p class="form-subtitle">Completa el formulario y te responderemos a la brevedad.</p>
+    </div>
+  </div>
+
+  <form id="contact-form" class="contact-form" novalidate>
+    <div class="form-group">
+      <label for="contact-name" class="form-label">
+        Nombre y Apellido <span class="required">*</span>
+      </label>
+      <div class="input-wrap">
+        <span class="material-symbols-outlined input-icon">person</span>
+        <input
+          type="text"
+          id="contact-name"
+          name="name"
+          class="form-input"
+          placeholder="Ej. Carlos Pérez"
+          required
+          minlength="2"
+        />
+      </div>
+      <span class="field-error" id="name-error"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="contact-phone" class="form-label">
+        Teléfono o WhatsApp <span class="required">*</span>
+      </label>
+      <div class="input-wrap">
+        <span class="material-symbols-outlined input-icon">call</span>
+        <input
+          type="tel"
+          id="contact-phone"
+          name="phone"
+          class="form-input"
+          placeholder="Ej. +507 6123-4567"
+          required
+          minlength="7"
+        />
+      </div>
+      <span class="field-error" id="phone-error"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="contact-email" class="form-label">
+        Correo Electrónico <span class="required">*</span>
+      </label>
+      <div class="input-wrap">
+        <span class="material-symbols-outlined input-icon">alternate_email</span>
+        <input
+          type="email"
+          id="contact-email"
+          name="email"
+          class="form-input"
+          placeholder="carlos@ejemplo.com"
+          required
+        />
+      </div>
+      <span class="field-error" id="email-error"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="contact-message" class="form-label">
+        Mensaje o Consulta <span class="required">*</span>
+      </label>
+      <div class="input-wrap textarea-wrap">
+        <textarea
+          id="contact-message"
+          name="message"
+          rows="3"
+          class="form-textarea"
+          placeholder="Hola, me interesa el apartamento en alquiler en La Siesta de Tocumen. Quisiera coordinar una visita..."
+          required
+          minlength="4"
+        ></textarea>
+      </div>
+      <span class="field-error" id="message-error"></span>
+    </div>
+
+    <button type="submit" id="submit-btn" class="btn btn-primary submit-btn">
+      <span class="btn-spinner" id="btn-spinner" style="display: none;"></span>
+      <span class="material-symbols-outlined btn-icon" id="btn-icon">send</span>
+      <span id="btn-text">Enviar Mensaje</span>
+    </button>
+
+    <!-- Alert Status Box (Ubicado en la parte inferior para máxima visibilidad) -->
+    <div id="form-alert" class="form-alert" style="display: none;" role="alert"></div>
+  </form>
+</div>
+
+<script>
+  function initContactForm() {
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    if (!form) return;
+
+    const alertBox = document.getElementById('form-alert');
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+    const btnSpinner = document.getElementById('btn-spinner');
+    const btnIcon = document.getElementById('btn-icon');
+    const btnText = document.getElementById('btn-text');
+
+    const nameInput = document.getElementById('contact-name') as HTMLInputElement;
+    const phoneInput = document.getElementById('contact-phone') as HTMLInputElement;
+    const emailInput = document.getElementById('contact-email') as HTMLInputElement;
+    const messageInput = document.getElementById('contact-message') as HTMLTextAreaElement;
+
+    function showAlert(type: 'success' | 'error', text: string) {
+      if (!alertBox) return;
+      alertBox.className = `form-alert alert-${type}`;
+      alertBox.textContent = text;
+      alertBox.style.display = 'block';
+      alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function hideAlert() {
+      if (!alertBox) return;
+      alertBox.style.display = 'none';
+      alertBox.textContent = '';
+    }
+
+    function setLoading(isLoading: boolean) {
+      if (!submitBtn) return;
+      submitBtn.disabled = isLoading;
+      if (btnSpinner) btnSpinner.style.display = isLoading ? 'inline-block' : 'none';
+      if (btnIcon) btnIcon.style.display = isLoading ? 'none' : 'inline-block';
+      if (btnText) btnText.textContent = isLoading ? 'Enviando mensaje...' : 'Enviar Mensaje';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert();
+
+      // Validación del lado del cliente
+      const name = nameInput?.value.trim();
+      const phone = phoneInput?.value.trim();
+      const email = emailInput?.value.trim();
+      const message = messageInput?.value.trim();
+
+      if (!name || name.length < 2) {
+        showAlert('error', 'Por favor escribe tu nombre completo.');
+        nameInput?.focus();
+        return;
+      }
+
+      if (!phone || phone.length < 7) {
+        showAlert('error', 'Por favor escribe un número de teléfono o WhatsApp válido.');
+        phoneInput?.focus();
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email || !emailRegex.test(email)) {
+        showAlert('error', 'Por favor ingresa un correo electrónico válido.');
+        emailInput?.focus();
+        return;
+      }
+
+      if (!message || message.length < 4) {
+        showAlert('error', 'Por favor escribe tu consulta o mensaje.');
+        messageInput?.focus();
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({ name, phone, email, message }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          showAlert('success', result.message || '¡Mensaje enviado con éxito! Te responderemos muy pronto.');
+          form.reset();
+        } else {
+          showAlert('error', result.error || 'Hubo un error al enviar tu mensaje. Por favor intenta por WhatsApp.');
+        }
+      } catch (err) {
+        showAlert('error', 'No fue posible conectar con el servidor. Por favor intenta por WhatsApp.');
+      } finally {
+        setLoading(false);
+      }
+    });
+  }
+
+  initContactForm();
+  document.addEventListener('astro:page-load', initContactForm);
+</script>
+
+<style>
+  .contact-form-card {
+    background-color: var(--color-white);
+    padding: 1.5rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  .form-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .form-icon {
+    width: 38px;
+    height: 38px;
+    background-color: var(--color-mosque-light);
+    color: var(--color-mosque);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .form-icon span {
+    font-size: 20px;
+  }
+
+  .form-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-nordic);
+    line-height: 1.2;
+    margin-bottom: 0.2rem;
+  }
+
+  .form-subtitle {
+    font-size: 0.8rem;
+    color: var(--color-nordic-muted);
+  }
+
+  /* Alerts */
+  .form-alert {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    margin-top: 0.85rem;
+    line-height: 1.4;
+    animation: fadeIn 0.25s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .alert-success {
+    background-color: var(--color-success-bg);
+    color: var(--color-success);
+    border: 1px solid rgba(46, 125, 50, 0.3);
+  }
+
+  :global([data-theme="dark"]) .alert-success {
+    background-color: rgba(46, 125, 50, 0.2);
+    color: #81c784;
+    border-color: rgba(129, 199, 132, 0.3);
+  }
+
+  .alert-error {
+    background-color: var(--color-error-bg);
+    color: var(--color-error);
+    border: 1px solid rgba(211, 47, 47, 0.3);
+  }
+
+  :global([data-theme="dark"]) .alert-error {
+    background-color: rgba(211, 47, 47, 0.2);
+    color: #e57373;
+    border-color: rgba(229, 115, 115, 0.3);
+  }
+
+  /* Inputs */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .form-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-nordic);
+  }
+
+  .required {
+    color: var(--color-error);
+  }
+
+  .input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .input-icon {
+    position: absolute;
+    left: 0.75rem;
+    color: var(--color-nordic-muted);
+    font-size: 1.05rem;
+    pointer-events: none;
+    transition: color 0.2s ease;
+  }
+
+  .form-input,
+  .form-textarea {
+    width: 100%;
+    padding: 0.65rem 0.85rem 0.65rem 2.4rem;
+    background-color: var(--color-clear-day);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-nordic);
+    font-size: 0.875rem;
+    outline: none;
+    transition: var(--transition);
+  }
+
+  .textarea-wrap .form-textarea {
+    padding-left: 0.85rem;
+    resize: vertical;
+    min-height: 85px;
+  }
+
+  .form-input:focus,
+  .form-textarea:focus {
+    background-color: var(--color-white);
+    border-color: var(--color-mosque);
+    box-shadow: 0 0 0 2px rgba(0, 102, 85, 0.15);
+  }
+
+  :global([data-theme="dark"]) .form-input:focus,
+  :global([data-theme="dark"]) .form-textarea:focus {
+    box-shadow: 0 0 0 2px rgba(13, 211, 172, 0.2);
+  }
+
+  .input-wrap:focus-within .input-icon {
+    color: var(--color-mosque);
+  }
+
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: var(--color-nordic-muted);
+    opacity: 0.7;
+  }
+
+  .field-error {
+    font-size: 0.725rem;
+    color: var(--color-error);
+    min-height: 0.8rem;
+  }
+
+  /* Submit Button */
+  .submit-btn {
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    margin-top: 0.25rem;
+  }
+
+  .btn-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: var(--color-white);
+    border-radius: var(--radius-full);
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .contact-form-card {
+      padding: 1.25rem 1rem;
+    }
+  }
+</style>

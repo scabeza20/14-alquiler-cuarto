@@ -1,0 +1,219 @@
+---
+import WhatsAppButton from './WhatsAppButton.astro';
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-container">
+    <div class="footer-grid">
+      <!-- Brand & Summary -->
+      <div class="footer-col footer-col-brand">
+        <div class="footer-brand">
+          <div class="brand-icon">
+            <span class="material-symbols-outlined">apartment</span>
+          </div>
+          <span class="brand-title">Alquiler Tocumen</span>
+        </div>
+        <p class="footer-desc">
+          Apartamento independiente en La Siesta de Tocumen. Tranquilidad, espacio amplio y excelente accesibilidad en la Ciudad de Panamá.
+        </p>
+        <div class="footer-whatsapp">
+          <WhatsAppButton text="Chatear por WhatsApp" size="sm" />
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-col">
+        <h3 class="footer-heading">Navegación</h3>
+        <ul class="footer-links">
+          <li><a href="/">Página Principal</a></li>
+          <li><a href="/detalle">Fotos y Especificaciones</a></li>
+          <li><a href="/detalle#requisitos">Requisitos de Alquiler</a></li>
+          <li><a href="/detalle#contacto">Formulario de Contacto</a></li>
+        </ul>
+      </div>
+
+      <!-- Location & Info -->
+      <div class="footer-col">
+        <h3 class="footer-heading">Ubicación</h3>
+        <p class="footer-text">
+          Calle Amador, Barriada La Siesta<br />
+          Corregimiento de Tocumen<br />
+          Ciudad de Panamá, Panamá
+        </p>
+        <a 
+          href="https://maps.app.goo.gl/wtWBXzSNpBpzRH1P9" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="footer-map-link"
+        >
+          <span class="material-symbols-outlined">location_on</span>
+          <span>Ver en Google Maps</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copyright">
+        &copy; {currentYear} Alquiler Tocumen. Todos los derechos reservados.
+      </p>
+      <div class="footer-promo-badge">
+        <span class="material-symbols-outlined">verified</span>
+        <span>50% de descuento en el depósito para ingresar</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-border-card);
+    margin-top: 3rem;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+    transition: var(--transition);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .brand-icon {
+    width: 34px;
+    height: 34px;
+    background-color: var(--color-nordic);
+    color: var(--color-white);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global([data-theme="dark"]) .brand-icon {
+    background-color: var(--color-mosque);
+    color: #0c1b18;
+  }
+
+  .brand-icon span {
+    font-size: 19px;
+  }
+
+  .brand-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--color-nordic);
+  }
+
+  .footer-desc {
+    color: var(--color-nordic-muted);
+    font-size: 0.875rem;
+    max-width: 380px;
+    margin-bottom: 1.25rem;
+    line-height: 1.55;
+  }
+
+  .footer-heading {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-nordic);
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .footer-links a {
+    color: var(--color-nordic-muted);
+    font-size: 0.85rem;
+    transition: color 0.2s ease;
+  }
+
+  .footer-links a:hover {
+    color: var(--color-mosque);
+  }
+
+  .footer-text {
+    color: var(--color-nordic-muted);
+    font-size: 0.85rem;
+    line-height: 1.55;
+    margin-bottom: 0.85rem;
+  }
+
+  .footer-map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.825rem;
+    font-weight: 600;
+    color: var(--color-mosque);
+    transition: color 0.2s ease;
+  }
+
+  .footer-map-link span:first-child {
+    font-size: 1rem;
+  }
+
+  .footer-map-link:hover {
+    color: var(--color-mosque-hover);
+    text-decoration: underline;
+  }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .footer-copyright {
+    color: var(--color-nordic-muted);
+    font-size: 0.8rem;
+  }
+
+  .footer-promo-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--color-mosque);
+    font-size: 0.8rem;
+    font-weight: 600;
+    background-color: var(--color-mosque-light);
+    border: 1px solid var(--color-border-card);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+  }
+
+  .footer-promo-badge span:first-child {
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

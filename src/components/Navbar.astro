@@ -1,0 +1,258 @@
+---
+import WhatsAppButton from './WhatsAppButton.astro';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = Astro.url.pathname } = Astro.props;
+---
+
+<header class="navbar-header">
+  <div class="container navbar-container">
+    <a href="/" class="navbar-brand" aria-label="Inicio - Alquiler Tocumen">
+      <div class="brand-icon">
+        <span class="material-symbols-outlined">apartment</span>
+      </div>
+      <div class="brand-text">
+        <span class="brand-title">Alquiler Tocumen</span>
+        <span class="brand-subtitle">Panamá</span>
+      </div>
+    </a>
+
+    <nav class="navbar-nav" aria-label="Navegación principal">
+      <a 
+        href="/" 
+        class={`nav-link ${currentPath === '/' ? 'active' : ''}`}
+      >
+        Inicio
+      </a>
+      <a 
+        href="/detalle" 
+        class={`nav-link ${currentPath === '/detalle' || currentPath.startsWith('/detalle') ? 'active' : ''}`}
+      >
+        Detalles y Fotos
+      </a>
+      <a 
+        href="/detalle#contacto" 
+        class="nav-link"
+      >
+        Contacto
+      </a>
+    </nav>
+
+    <div class="navbar-actions">
+      <!-- Dark Mode Toggle Button -->
+      <button 
+        type="button" 
+        id="theme-toggle" 
+        class="theme-toggle-btn" 
+        aria-label="Cambiar modo claro u oscuro"
+        title="Cambiar modo claro / oscuro"
+      >
+        <span class="material-symbols-outlined icon-dark">dark_mode</span>
+        <span class="material-symbols-outlined icon-light">light_mode</span>
+      </button>
+
+      <WhatsAppButton size="sm" text="WhatsApp" />
+    </div>
+  </div>
+</header>
+
+<script>
+  function initThemeToggle() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (!toggleBtn) return;
+
+    toggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+  }
+
+  initThemeToggle();
+  document.addEventListener('astro:page-load', initThemeToggle);
+</script>
+
+<style>
+  .navbar-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-navbar-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-navbar-border);
+    transition: var(--transition);
+  }
+
+  :global([data-theme="dark"]) .navbar-header {
+    background-color: var(--color-navbar-bg);
+    border-bottom: 1px solid var(--color-navbar-border);
+  }
+
+  .navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+  }
+
+  .brand-icon {
+    width: 36px;
+    height: 36px;
+    background-color: var(--color-nordic);
+    color: var(--color-white);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .brand-icon span {
+    font-size: 20px;
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    line-height: 1.2;
+    color: var(--color-nordic);
+    letter-spacing: -0.02em;
+  }
+
+  .brand-subtitle {
+    font-size: 0.7rem;
+    color: var(--color-nordic-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-nordic-muted);
+    padding: 0.4rem 0;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--color-mosque);
+  }
+
+  .nav-link.active {
+    color: var(--color-mosque);
+    font-weight: 600;
+  }
+
+  .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-mosque);
+    border-radius: 2px;
+  }
+
+  .navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  /* Theme Toggle Button */
+  .theme-toggle-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-white);
+    color: var(--color-nordic);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .theme-toggle-btn:hover {
+    border-color: var(--color-mosque);
+    color: var(--color-mosque);
+    transform: rotate(15deg);
+  }
+
+  .theme-toggle-btn span {
+    font-size: 20px;
+  }
+
+  :global([data-theme="dark"]) .brand-icon {
+    background-color: var(--color-mosque);
+    color: #0c1b18;
+  }
+
+  /* Icons visibility according to theme */
+  .icon-light {
+    display: none;
+  }
+  .icon-dark {
+    display: inline-block;
+  }
+
+  :global([data-theme="dark"]) .icon-light {
+    display: inline-block;
+  }
+  :global([data-theme="dark"]) .icon-dark {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    .navbar-container {
+      height: 58px;
+    }
+    .brand-subtitle {
+      display: none;
+    }
+    .navbar-nav {
+      gap: 0.85rem;
+    }
+    .nav-link {
+      font-size: 0.825rem;
+    }
+    .navbar-actions {
+      gap: 0.5rem;
+    }
+    .navbar-actions :global(.btn span) {
+      display: none;
+    }
+    .navbar-actions :global(.btn) {
+      padding: 0.45rem;
+      border-radius: var(--radius-full);
+    }
+  }
+</style>
