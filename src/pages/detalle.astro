@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Gallery from '../components/Gallery.astro';
-import ContactForm from '../components/ContactForm.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
 import { property } from '../data/property';
 ---
@@ -209,9 +208,9 @@ import { property } from '../data/property';
 
               <div class="sidebar-actions">
                 <WhatsAppButton size="lg" text="Chatear por WhatsApp" className="w-full" />
-                <a href="#contacto" class="btn btn-secondary w-full">
+                <a href="/contacto" class="btn btn-secondary w-full">
                   <span class="material-symbols-outlined">mail</span>
-                  <span>Llenar Formulario</span>
+                  <span>Formulario de Contacto</span>
                 </a>
               </div>
 
@@ -220,9 +219,31 @@ import { property } from '../data/property';
               </p>
             </div>
 
-            <!-- Contact Form Embed -->
-            <div id="contacto">
-              <ContactForm />
+            <!-- Contact CTA Card -->
+            <div id="contacto" class="sidebar-card contact-cta-card">
+              <div class="contact-cta-icon-wrap">
+                <span class="material-symbols-outlined">outgoing_mail</span>
+              </div>
+              <h3 class="contact-cta-title">¿Interesado en el alquiler?</h3>
+              <p class="contact-cta-text">
+                Envíanos tus datos o consultas a través de nuestro formulario de contacto dedicado.
+              </p>
+              <div class="contact-cta-action">
+                <a href="/contacto" class="btn btn-primary w-full">
+                  <span class="material-symbols-outlined">mail</span>
+                  <span>Ir al Formulario de Contacto</span>
+                </a>
+              </div>
+              <ul class="contact-cta-highlights">
+                <li>
+                  <span class="material-symbols-outlined">verified</span>
+                  <span>Trato directo sin intermediarios</span>
+                </li>
+                <li>
+                  <span class="material-symbols-outlined">schedule</span>
+                  <span>Coordinación rápida de visitas</span>
+                </li>
+              </ul>
             </div>
           </div>
         </aside>
@@ -687,6 +708,75 @@ import { property } from '../data/property';
     color: var(--color-nordic-muted);
     text-align: center;
     line-height: 1.4;
+  }
+
+  /* Contact CTA Card */
+  .contact-cta-card {
+    background-color: var(--color-white);
+    padding: 1.5rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border-card);
+    box-shadow: var(--shadow-card);
+    text-align: center;
+    transition: var(--transition);
+  }
+
+  .contact-cta-icon-wrap {
+    width: 48px;
+    height: 48px;
+    background-color: var(--color-mosque-light);
+    color: var(--color-mosque);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.85rem;
+  }
+
+  .contact-cta-icon-wrap span {
+    font-size: 26px;
+  }
+
+  .contact-cta-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-nordic);
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+
+  .contact-cta-text {
+    font-size: 0.825rem;
+    color: var(--color-nordic-muted);
+    line-height: 1.5;
+    margin-bottom: 1.15rem;
+  }
+
+  .contact-cta-action {
+    margin-bottom: 1.15rem;
+  }
+
+  .contact-cta-highlights {
+    border-top: 1px solid var(--color-border);
+    padding-top: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+  }
+
+  .contact-cta-highlights li {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.775rem;
+    color: var(--color-nordic-muted);
+  }
+
+  .contact-cta-highlights li span:first-child {
+    font-size: 16px;
+    color: var(--color-mosque);
+    flex-shrink: 0;
   }
 
   /* Responsive Queries */

@@ -129,16 +129,20 @@ export const POST: APIRoute = async ({ request }) => {
 
       if (emailError) {
         console.error('Error enviando con Resend:', emailError);
-        throw new Error(emailError.message);
+        if (import.meta.env.DEV) {
+          console.warn('-> [DEV] Continuando con fallback simulado local debido a clave de prueba/invalida');
+        } else {
+          throw new Error(emailError.message);
+        }
+      } else {
+        return new Response(
+          JSON.stringify({ 
+            success: true, 
+            message: '¡Gracias por contactarnos! Tu mensaje fue enviado con éxito. Te responderemos a la brevedad.' 
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
       }
-
-      return new Response(
-        JSON.stringify({ 
-          success: true, 
-          message: '¡Gracias por contactarnos! Tu mensaje fue enviado con éxito. Te responderemos a la brevedad.' 
-        }),
-        { status: 200, headers: { 'Content-Type': 'application/json' } }
-      );
     }
 
     // 2. Envío mediante Web3Forms si está configurado

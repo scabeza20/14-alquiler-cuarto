@@ -34,8 +34,8 @@ const { currentPath = Astro.url.pathname } = Astro.props;
         Detalles y Fotos
       </a>
       <a 
-        href="/detalle#contacto" 
-        class="nav-link"
+        href="/contacto" 
+        class={`nav-link ${currentPath === '/contacto' || currentPath.startsWith('/contacto') ? 'active' : ''}`}
       >
         Contacto
       </a>
