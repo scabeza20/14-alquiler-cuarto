@@ -7,14 +7,72 @@ import WhatsAppButton from '../components/WhatsAppButton.astro';
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  type?: string;
+  canonical?: string;
 }
 
 const {
   title = 'Alquiler de Apartamento en Tocumen | $250/mes',
-  description = 'Apartamento en La Siesta de Tocumen, Panamá. Entrada independiente, baño privado, área de lavado, 200 m². Promoción 50% descuento en depósito.'
+  description = 'Apartamento en La Siesta de Tocumen, Panamá. Entrada independiente, baño privado, área de lavado, 200 m². Promoción 50% descuento en depósito.',
+  image = '/img/foto-1.webp',
+  type = 'website',
+  canonical,
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
+const siteOrigin = Astro.site?.origin || Astro.url.origin || 'https://alquiler-tocumen.vercel.app';
+const canonicalURL = canonical || new URL(Astro.url.pathname, siteOrigin).href;
+const ogImageURL = new URL(image, siteOrigin).href;
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "Apartment",
+  "name": "Apartamento Independiente en Tocumen",
+  "description": description,
+  "url": canonicalURL,
+  "image": [ogImageURL],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Calle Amador, Barriada La Siesta",
+    "addressLocality": "Tocumen",
+    "addressRegion": "Panamá",
+    "addressCountry": "PA"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 9.0724,
+    "longitude": -79.3789
+  },
+  "numberOfRooms": 1,
+  "numberOfBathroomsTotal": 1,
+  "floorSize": {
+    "@type": "QuantitativeValue",
+    "value": 200,
+    "unitCode": "MTK"
+  },
+  "occupancy": {
+    "@type": "QuantitativeValue",
+    "maxValue": 3
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "250",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": {
+      "@type": "UnitPriceSpecification",
+      "price": "250",
+      "priceCurrency": "USD",
+      "unitText": "MONTH"
+    }
+  },
+  "amenityFeature": [
+    { "@type": "LocationFeatureSpecification", "name": "Entrada independiente", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Baño privado", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Área de lavado", "value": true }
+  ]
+};
 ---
 
 <!doctype html>
@@ -22,8 +80,15 @@ const currentPath = Astro.url.pathname;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#006655" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
 
     <!-- Theme Detection (Prevent FOUC) -->
     <script is:inline>
@@ -39,10 +104,24 @@ const currentPath = Astro.url.pathname;
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content="Alquiler Tocumen" />
+    <meta property="og:locale" content="es_PA" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="/img/foto-1.webp" />
+    <meta property="og:image" content={ogImageURL} />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <!-- Schema.org JSON-LD Structured Data -->
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(schemaData)} />
 
     <!-- Google Fonts: Inter & Material Symbols -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

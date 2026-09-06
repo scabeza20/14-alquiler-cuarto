@@ -17,3 +17,9 @@
 
 - [x] 4.1 Realizar una prueba de envío de formulario en `/contacto` para verificar que la comunicación con `/api/contact` funcione de extremo a extremo con sus validaciones y mensajes.
 - [x] 4.2 Ejecutar `astro check` y `astro build` para verificar que no existan errores de TypeScript ni fallas de compilación en las nuevas rutas.
+
+## 5. Favicon de Casa y Optimización SEO
+
+- [x] 5.1 Diseñar e implementar un favicon SVG (`public/favicon.svg`) con estética de casa moderna / apartamento alineado con la paleta Mosque (#006655) y Nordic (#19322F), verificando que se cargue correctamente como favicon del sitio.
+- [x] 5.2 Auditar y optimizar etiquetas SEO en `Layout.astro` (canonical, Open Graph completo, Twitter Cards, robots, Schema.org estructurado JSON-LD) y en las páginas `/`, `/detalle` y `/contacto`.
+- [x] 5.3 Verificar compilación con `astro build` y comprobar los metadatos generados en el HTML renderizado.
