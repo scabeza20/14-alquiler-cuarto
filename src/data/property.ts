@@ -53,7 +53,7 @@ export const property: PropertyData = {
   bathrooms: 1,
   maxOccupancy: 3,
   occupancyNote: "Máximo 3 personas (preferiblemente parejas)",
-  petPolicy: "No se aceptan mascotas grandes; solo gatos y perros chicos.",
+  petPolicy: "No se aceptan mascotas",
   description:
     "Apartamento en la siesta de Tocumen, con entrada independiente, baño, área de lavado, servicios de agua y luz destacados sin irregularidades, para maximo 3 personas, no se aceptan perros grandes, promoción de la mitad del precio del deposito para ingresar, muy cerca de la parada de buses, comercios y zona paga la Siesta, centrico respecto al metro de la 24 de diciembre.",
   location: {
@@ -99,8 +99,8 @@ export const property: PropertyData = {
     },
     {
       icon: "pets",
-      title: "Mascotas Chicas",
-      description: "Se admiten gatos y perros de raza pequeña.",
+      title: "No se aceptan mascotas",
+      description: "No hay suficiente espacio para animales",
     },
     {
       icon: "payments",

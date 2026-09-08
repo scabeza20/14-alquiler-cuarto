@@ -12,7 +12,7 @@ Google Maps: https://maps.app.goo.gl/wtWBXzSNpBpzRH1P9
 ## Precio, espacio, requisitos
 
 Precio: 250$ Negociable
-Mascotas: No se aceptan mascotas grandes, solo gatos, perros chicos
+Mascotas: No se aceptan mascotas
 Espacio: 25 mts cuadrados
 Personas: Maximo 3 personas
 Baños: 1 baño
