@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Gallery from '../components/Gallery.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
+import Icon from '../components/Icon.astro';
 import { property } from '../data/property';
 ---
 
@@ -15,9 +16,9 @@ import { property } from '../data/property';
       <nav class="breadcrumb-nav" aria-label="Ruta de navegación">
         <ol class="breadcrumbs">
           <li><a href="/">Inicio</a></li>
-          <li class="separator"><span class="material-symbols-outlined">chevron_right</span></li>
+          <li class="separator"><Icon name="chevron_right" size={16} /></li>
           <li><a href="/#inmueble">Tocumen</a></li>
-          <li class="separator"><span class="material-symbols-outlined">chevron_right</span></li>
+          <li class="separator"><Icon name="chevron_right" size={16} /></li>
           <li class="current" aria-current="page">Apartamento en La Siesta</li>
         </ol>
       </nav>
@@ -36,7 +37,7 @@ import { property } from '../data/property';
             <h1 class="property-title">{property.title}</h1>
             
             <p class="property-address">
-              <span class="material-symbols-outlined">location_on</span>
+              <Icon name="location_on" size={18} />
               <span>{property.location.fullAddress}</span>
             </p>
           </header>
@@ -51,22 +52,22 @@ import { property } from '../data/property';
             <h2 class="section-subtitle">Características Principales</h2>
             <div class="features-grid">
               <div class="feature-card">
-                <span class="material-symbols-outlined feature-icon">square_foot</span>
+                <Icon name="square_foot" size={24} class="feature-icon" />
                 <span class="feature-val">{property.area} {property.areaUnit}</span>
                 <span class="feature-lbl">Espacio Total</span>
               </div>
               <div class="feature-card">
-                <span class="material-symbols-outlined feature-icon">shower</span>
+                <Icon name="shower" size={24} class="feature-icon" />
                 <span class="feature-val">{property.bathrooms}</span>
                 <span class="feature-lbl">Baño Completo</span>
               </div>
               <div class="feature-card">
-                <span class="material-symbols-outlined feature-icon">group</span>
+                <Icon name="group" size={24} class="feature-icon" />
                 <span class="feature-val">Hasta {property.maxOccupancy}</span>
                 <span class="feature-lbl">Personas (Parejas)</span>
               </div>
               <div class="feature-card">
-                <span class="material-symbols-outlined feature-icon">door_front</span>
+                <Icon name="door_front" size={24} class="feature-icon" />
                 <span class="feature-val">100%</span>
                 <span class="feature-lbl">Independiente</span>
               </div>
@@ -93,7 +94,7 @@ import { property } from '../data/property';
               {property.features.map((feat) => (
                 <div class="amenity-item">
                   <div class="amenity-icon">
-                    <span class="material-symbols-outlined">{feat.icon}</span>
+                    <Icon name={feat.icon} size={22} />
                   </div>
                   <div>
                     <strong class="amenity-title">{feat.title}</strong>
@@ -109,25 +110,25 @@ import { property } from '../data/property';
             <h2 class="section-subtitle">Requisitos y Normas de Convivencia</h2>
             <div class="rules-list">
               <div class="rule-item">
-                <span class="material-symbols-outlined rule-icon success">check_circle</span>
+                <Icon name="check_circle" size={20} class="rule-icon success" />
                 <div>
                   <strong>Promoción en Depósito:</strong> Solo se abona la mitad del valor del depósito para ingresar ($125).
                 </div>
               </div>
               <div class="rule-item">
-                <span class="material-symbols-outlined rule-icon success">check_circle</span>
+                <Icon name="check_circle" size={20} class="rule-icon success" />
                 <div>
                   <strong>Ocupación:</strong> Máximo 3 personas. Ideal y preferible para parejas o trabajadores responsables.
                 </div>
               </div>
               <div class="rule-item">
-                <span class="material-symbols-outlined rule-icon warning">pets</span>
+                <Icon name="pets" size={20} class="rule-icon warning" />
                 <div>
                   <strong>Política de Mascotas:</strong> No se aceptan mascotas. <em>En especial mascotas grandes.</em>
                 </div>
               </div>
               <div class="rule-item">
-                <span class="material-symbols-outlined rule-icon success">check_circle</span>
+                <Icon name="check_circle" size={20} class="rule-icon success" />
                 <div>
                   <strong>Servicios:</strong> Área de lavado exclusiva para mayor comodidad en el hogar.
                 </div>
@@ -145,12 +146,12 @@ import { property } from '../data/property';
                 </p>
               </div>
               <a 
-                href={property.location.googleMapsUrl}
+                href={property.location.googleMapsUrl} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 class="btn btn-primary"
               >
-                <span class="material-symbols-outlined">map</span>
+                <Icon name="map" size={18} />
                 <span>Abrir en Google Maps</span>
               </a>
             </div>
@@ -160,7 +161,7 @@ import { property } from '../data/property';
               <div class="map-illustration">
                 <div class="map-pin-pulse">
                   <div class="pin-marker">
-                    <span class="material-symbols-outlined">home</span>
+                    <Icon name="home" size={20} />
                   </div>
                 </div>
                 <div class="map-overlay-info">
@@ -202,14 +203,14 @@ import { property } from '../data/property';
               </div>
 
               <div class="promo-callout">
-                <span class="material-symbols-outlined">celebration</span>
+                <Icon name="celebration" size={20} />
                 <p><strong>Promoción:</strong> Mitad del depósito para ingresar.</p>
               </div>
 
               <div class="sidebar-actions">
                 <WhatsAppButton size="lg" text="Chatear por WhatsApp" className="w-full" />
                 <a href="/contacto" class="btn btn-secondary w-full">
-                  <span class="material-symbols-outlined">mail</span>
+                  <Icon name="mail" size={18} />
                   <span>Formulario de Contacto</span>
                 </a>
               </div>
@@ -222,7 +223,7 @@ import { property } from '../data/property';
             <!-- Contact CTA Card -->
             <div id="contacto" class="sidebar-card contact-cta-card">
               <div class="contact-cta-icon-wrap">
-                <span class="material-symbols-outlined">outgoing_mail</span>
+                <Icon name="outgoing_mail" size={24} />
               </div>
               <h3 class="contact-cta-title">¿Interesado en el alquiler?</h3>
               <p class="contact-cta-text">
@@ -230,17 +231,17 @@ import { property } from '../data/property';
               </p>
               <div class="contact-cta-action">
                 <a href="/contacto" class="btn btn-primary w-full">
-                  <span class="material-symbols-outlined">mail</span>
+                  <Icon name="mail" size={18} />
                   <span>Ir al Formulario de Contacto</span>
                 </a>
               </div>
               <ul class="contact-cta-highlights">
                 <li>
-                  <span class="material-symbols-outlined">verified</span>
+                  <Icon name="verified" size={16} />
                   <span>Trato directo sin intermediarios</span>
                 </li>
                 <li>
-                  <span class="material-symbols-outlined">schedule</span>
+                  <Icon name="schedule" size={16} />
                   <span>Coordinación rápida de visitas</span>
                 </li>
               </ul>

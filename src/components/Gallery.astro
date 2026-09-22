@@ -1,5 +1,6 @@
 ---
 import type { PropertyImage } from '../data/property';
+import Icon from './Icon.astro';
 
 interface Props {
   images: PropertyImage[];
@@ -18,6 +19,9 @@ const { images } = Astro.props;
         alt={images[0].alt}
         class="main-img"
         loading="eager"
+        decoding="async"
+        width="900"
+        height="1200"
       />
       
       <!-- Badges -->
@@ -28,10 +32,10 @@ const { images } = Astro.props;
 
       <!-- Navigation arrows -->
       <button class="gallery-nav-btn prev" id="gallery-prev" aria-label="Foto anterior">
-        <span class="material-symbols-outlined">chevron_left</span>
+        <Icon name="chevron_left" size={24} />
       </button>
       <button class="gallery-nav-btn next" id="gallery-next" aria-label="Foto siguiente">
-        <span class="material-symbols-outlined">chevron_right</span>
+        <Icon name="chevron_right" size={24} />
       </button>
 
       <!-- Caption -->
@@ -54,7 +58,14 @@ const { images } = Astro.props;
           data-title={img.title}
           aria-label={`Ver ${img.title}`}
         >
-          <img src={img.src} alt={img.alt} loading="lazy" />
+          <img 
+            src={img.src} 
+            alt={img.alt} 
+            loading="lazy" 
+            decoding="async"
+            width="900"
+            height="1200"
+          />
           <span class="thumb-index">{idx + 1}</span>
         </button>
       ))}

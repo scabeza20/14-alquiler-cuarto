@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import ContactForm from '../components/ContactForm.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
+import Icon from '../components/Icon.astro';
 import { property } from '../data/property';
 
 const title = `Contacto | ${property.title}`;
@@ -15,7 +16,7 @@ const description = `Envía tu consulta o ponte en contacto para alquilar el apa
       <!-- Back Navigation -->
       <nav class="breadcrumb-nav" aria-label="Ruta de navegación">
         <a href="/detalle" class="back-link">
-          <span class="material-symbols-outlined">arrow_back</span>
+          <Icon name="arrow_back" size={18} />
           Volver a detalles del apartamento
         </a>
       </nav>
@@ -23,7 +24,7 @@ const description = `Envía tu consulta o ponte en contacto para alquilar el apa
       <!-- Page Header -->
       <header class="contact-header">
         <div class="property-tag">
-          <span class="material-symbols-outlined tag-icon">apartment</span>
+          <Icon name="apartment" size={16} class="tag-icon" />
           <span>La Siesta de Tocumen &bull; {property.priceFormatted}/mes</span>
         </div>
         <h1 class="page-title">Formulario de Contacto</h1>
@@ -36,7 +37,7 @@ const description = `Envía tu consulta o ponte en contacto para alquilar el apa
       <aside class="whatsapp-card" aria-label="Contacto por WhatsApp">
         <div class="whatsapp-card-content">
           <div class="whatsapp-card-icon">
-            <span class="material-symbols-outlined">chat</span>
+            <Icon name="chat" size={24} />
           </div>
           <div class="whatsapp-card-text">
             <strong>¿Prefieres atención inmediata?</strong>
@@ -65,14 +66,14 @@ const description = `Envía tu consulta o ponte en contacto para alquilar el apa
       <!-- Extra Property Info Box -->
       <footer class="property-summary-box">
         <div class="summary-item">
-          <span class="material-symbols-outlined summary-icon">payments</span>
+          <Icon name="payments" size={20} class="summary-icon" />
           <div>
             <strong>$250 / mes ({property.priceNote})</strong>
             <p>{property.depositPromo}</p>
           </div>
         </div>
         <div class="summary-item">
-          <span class="material-symbols-outlined summary-icon">pin_drop</span>
+          <Icon name="pin_drop" size={20} class="summary-icon" />
           <div>
             <strong>Ubicación en Tocumen</strong>
             <p>{property.location.corregimiento}, {property.location.barriada}, {property.location.street}</p>

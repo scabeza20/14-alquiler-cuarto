@@ -1,5 +1,6 @@
 ---
 import WhatsAppButton from './WhatsAppButton.astro';
+import Icon from './Icon.astro';
 const currentYear = new Date().getFullYear();
 ---
 
@@ -10,7 +11,7 @@ const currentYear = new Date().getFullYear();
       <div class="footer-col footer-col-brand">
         <div class="footer-brand">
           <div class="brand-icon">
-            <span class="material-symbols-outlined">apartment</span>
+            <Icon name="apartment" size={19} />
           </div>
           <span class="brand-title">Alquiler Tocumen</span>
         </div>
@@ -47,7 +48,7 @@ const currentYear = new Date().getFullYear();
           rel="noopener noreferrer" 
           class="footer-map-link"
         >
-          <span class="material-symbols-outlined">location_on</span>
+          <Icon name="location_on" size={16} />
           <span>Ver en Google Maps</span>
         </a>
       </div>
@@ -58,7 +59,7 @@ const currentYear = new Date().getFullYear();
         &copy; {currentYear} Alquiler Tocumen. Todos los derechos reservados.
       </p>
       <div class="footer-promo-badge">
-        <span class="material-symbols-outlined">verified</span>
+        <Icon name="verified" size={16} />
         <span>50% de descuento en el depósito para ingresar</span>
       </div>
     </div>

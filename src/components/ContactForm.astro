@@ -1,4 +1,6 @@
 ---
+import Icon from './Icon.astro';
+
 interface Props {
   className?: string;
 }
@@ -9,7 +11,7 @@ const { className = '' } = Astro.props;
 <div class={`contact-form-card ${className}`} id="contact-form-container">
   <div class="form-header">
     <div class="form-icon">
-      <span class="material-symbols-outlined">mail</span>
+      <Icon name="mail" size={20} />
     </div>
     <div>
       <h3 class="form-title">Enviar Mensaje</h3>
@@ -23,7 +25,7 @@ const { className = '' } = Astro.props;
         Nombre y Apellido <span class="required">*</span>
       </label>
       <div class="input-wrap">
-        <span class="material-symbols-outlined input-icon">person</span>
+        <Icon name="person" size={18} class="input-icon" />
         <input
           type="text"
           id="contact-name"
@@ -42,7 +44,7 @@ const { className = '' } = Astro.props;
         Teléfono o WhatsApp <span class="required">*</span>
       </label>
       <div class="input-wrap">
-        <span class="material-symbols-outlined input-icon">call</span>
+        <Icon name="call" size={18} class="input-icon" />
         <input
           type="tel"
           id="contact-phone"
@@ -61,7 +63,7 @@ const { className = '' } = Astro.props;
         Correo Electrónico <span class="required">*</span>
       </label>
       <div class="input-wrap">
-        <span class="material-symbols-outlined input-icon">alternate_email</span>
+        <Icon name="alternate_email" size={18} class="input-icon" />
         <input
           type="email"
           id="contact-email"
@@ -94,7 +96,7 @@ const { className = '' } = Astro.props;
 
     <button type="submit" id="submit-btn" class="btn btn-primary submit-btn">
       <span class="btn-spinner" id="btn-spinner" style="display: none;"></span>
-      <span class="material-symbols-outlined btn-icon" id="btn-icon">send</span>
+      <Icon name="send" size={18} class="btn-icon" id="btn-icon" />
       <span id="btn-text">Enviar Mensaje</span>
     </button>
 
@@ -321,11 +323,10 @@ const { className = '' } = Astro.props;
     align-items: center;
   }
 
-  .input-icon {
+  :global(.input-icon) {
     position: absolute;
     left: 0.75rem;
     color: var(--color-nordic-muted);
-    font-size: 1.05rem;
     pointer-events: none;
     transition: color 0.2s ease;
   }

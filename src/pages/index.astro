@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
+import Icon from '../components/Icon.astro';
 import { property } from '../data/property';
 ---
 
@@ -12,7 +13,7 @@ import { property } from '../data/property';
   <section class="hero-section">
     <div class="container hero-container">
       <div class="hero-badge">
-        <span class="material-symbols-outlined">verified</span>
+        <Icon name="verified" size={16} />
         <span>Alquiler Disponible en Tocumen, Panamá</span>
       </div>
 
@@ -26,7 +27,7 @@ import { property } from '../data/property';
 
       <div class="hero-cta-group">
         <a href="/detalle" class="btn btn-primary btn-lg">
-          <span class="material-symbols-outlined">visibility</span>
+          <Icon name="visibility" size={18} />
           <span>Ver Fotos y Detalles</span>
         </a>
         <WhatsAppButton size="lg" text="Chatear por WhatsApp" />
@@ -67,7 +68,7 @@ import { property } from '../data/property';
         </div>
         <a href="/detalle" class="section-link">
           <span>Ver ficha completa</span>
-          <span class="material-symbols-outlined">arrow_forward</span>
+          <Icon name="arrow_forward" size={18} />
         </a>
       </div>
 
@@ -78,6 +79,10 @@ import { property } from '../data/property';
             alt={property.images[0].alt}
             class="card-img"
             loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            width="900"
+            height="1200"
           />
           <div class="media-badges">
             <span class="badge badge-exclusive">Disponible</span>
@@ -96,7 +101,7 @@ import { property } from '../data/property';
               <a href="/detalle">{property.title}</a>
             </h3>
             <p class="card-location">
-              <span class="material-symbols-outlined">location_on</span>
+              <Icon name="location_on" size={16} />
               <span>{property.location.street}, {property.location.barriada}</span>
             </p>
           </div>
@@ -107,26 +112,26 @@ import { property } from '../data/property';
 
           <div class="specs-grid">
             <div class="spec-chip">
-              <span class="material-symbols-outlined">square_foot</span>
+              <Icon name="square_foot" size={18} />
               <span>{property.area} m²</span>
             </div>
             <div class="spec-chip">
-              <span class="material-symbols-outlined">shower</span>
+              <Icon name="shower" size={18} />
               <span>{property.bathrooms} Baño</span>
             </div>
             <div class="spec-chip">
-              <span class="material-symbols-outlined">group</span>
+              <Icon name="group" size={18} />
               <span>Máx. {property.maxOccupancy} pers.</span>
             </div>
             <div class="spec-chip">
-              <span class="material-symbols-outlined">door_front</span>
+              <Icon name="door_front" size={18} />
               <span>Independiente</span>
             </div>
           </div>
 
           <div class="card-actions">
             <a href="/detalle" class="btn btn-primary">
-              <span class="material-symbols-outlined">info</span>
+              <Icon name="info" size={18} />
               <span>Ver Fotos y Detalles</span>
             </a>
             <WhatsAppButton text="Consultar por WhatsApp" />
@@ -146,17 +151,24 @@ import { property } from '../data/property';
         </div>
         <a href="/detalle" class="section-link">
           <span>Ver las 8 fotos</span>
-          <span class="material-symbols-outlined">photo_library</span>
+          <Icon name="photo_library" size={18} />
         </a>
       </div>
 
       <div class="preview-grid">
         {property.images.slice(0, 4).map((img) => (
           <a href="/detalle" class="preview-item group">
-            <img src={img.src} alt={img.alt} loading="lazy" />
+            <img 
+              src={img.src} 
+              alt={img.alt} 
+              loading="lazy" 
+              decoding="async"
+              width="900" 
+              height="1200" 
+            />
             <div class="preview-overlay">
               <span class="preview-label">{img.title}</span>
-              <span class="material-symbols-outlined">zoom_in</span>
+              <Icon name="zoom_in" size={20} />
             </div>
           </a>
         ))}
@@ -175,7 +187,7 @@ import { property } from '../data/property';
       <div class="advantages-grid">
         <div class="advantage-card">
           <div class="advantage-icon">
-            <span class="material-symbols-outlined">key</span>
+            <Icon name="key" size={24} />
           </div>
           <h3 class="advantage-title">Entrada 100% Independiente</h3>
           <p class="advantage-text">
@@ -185,7 +197,7 @@ import { property } from '../data/property';
 
         <div class="advantage-card">
           <div class="advantage-icon">
-            <span class="material-symbols-outlined">local_offer</span>
+            <Icon name="local_offer" size={24} />
           </div>
           <h3 class="advantage-title">Promoción 50% en Depósito</h3>
           <p class="advantage-text">
@@ -195,7 +207,7 @@ import { property } from '../data/property';
 
         <div class="advantage-card">
           <div class="advantage-icon">
-            <span class="material-symbols-outlined">local_laundry_service</span>
+            <Icon name="local_laundry_service" size={24} />
           </div>
           <h3 class="advantage-title">Área de Lavado & 200 m²</h3>
           <p class="advantage-text">
@@ -220,7 +232,7 @@ import { property } from '../data/property';
         <div class="cta-buttons">
           <WhatsAppButton size="lg" text="Escribir por WhatsApp" />
           <a href="/contacto" class="btn btn-secondary btn-lg">
-            <span class="material-symbols-outlined">mail</span>
+            <Icon name="mail" size={20} />
             <span>Formulario de Contacto</span>
           </a>
         </div>

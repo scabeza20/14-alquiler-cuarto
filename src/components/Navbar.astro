@@ -1,5 +1,6 @@
 ---
 import WhatsAppButton from './WhatsAppButton.astro';
+import Icon from './Icon.astro';
 
 interface Props {
   currentPath?: string;
@@ -12,7 +13,7 @@ const { currentPath = Astro.url.pathname } = Astro.props;
   <div class="container navbar-container">
     <a href="/" class="navbar-brand" aria-label="Inicio - Alquiler Tocumen">
       <div class="brand-icon">
-        <span class="material-symbols-outlined">apartment</span>
+        <Icon name="apartment" size={20} />
       </div>
       <div class="brand-text">
         <span class="brand-title">Alquiler Tocumen</span>
@@ -50,8 +51,8 @@ const { currentPath = Astro.url.pathname } = Astro.props;
         aria-label="Cambiar modo claro u oscuro"
         title="Cambiar modo claro / oscuro"
       >
-        <span class="material-symbols-outlined icon-dark">dark_mode</span>
-        <span class="material-symbols-outlined icon-light">light_mode</span>
+        <Icon name="dark_mode" size={20} class="icon-dark" />
+        <Icon name="light_mode" size={20} class="icon-light" />
       </button>
 
       <WhatsAppButton size="sm" text="WhatsApp" />
@@ -217,17 +218,17 @@ const { currentPath = Astro.url.pathname } = Astro.props;
   }
 
   /* Icons visibility according to theme */
-  .icon-light {
+  :global(.icon-light) {
     display: none;
   }
-  .icon-dark {
+  :global(.icon-dark) {
     display: inline-block;
   }
 
-  :global([data-theme="dark"]) .icon-light {
+  :global([data-theme="dark"]) :global(.icon-light) {
     display: inline-block;
   }
-  :global([data-theme="dark"]) .icon-dark {
+  :global([data-theme="dark"]) :global(.icon-dark) {
     display: none;
   }
 

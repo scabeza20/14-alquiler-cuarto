@@ -8,6 +8,7 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  preloadImage?: string;
   type?: string;
   canonical?: string;
 }
@@ -16,11 +17,13 @@ const {
   title = 'Alquiler de Apartamento en Tocumen | $250/mes',
   description = 'Apartamento en La Siesta de Tocumen, Panamá. Entrada independiente, baño privado, área de lavado, 200 m². Promoción 50% descuento en depósito.',
   image = '/img/foto-1.webp',
+  preloadImage,
   type = 'website',
   canonical,
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
+const imageToPreload = preloadImage ?? (currentPath === '/' ? '/img/foto-1.webp' : undefined);
 const siteOrigin = Astro.site?.origin || Astro.url.origin || 'https://alquiler-tocumen.vercel.app';
 const canonicalURL = canonical || new URL(Astro.url.pathname, siteOrigin).href;
 const ogImageURL = new URL(image, siteOrigin).href;
@@ -90,6 +93,17 @@ const schemaData = {
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
 
+    <!-- LCP Critical Image Preload -->
+    {imageToPreload && (
+      <link
+        rel="preload"
+        as="image"
+        href={imageToPreload}
+        fetchpriority="high"
+        type="image/webp"
+      />
+    )}
+
     <!-- Theme Detection (Prevent FOUC) -->
     <script is:inline>
       const savedTheme = localStorage.getItem('theme');
@@ -123,17 +137,26 @@ const schemaData = {
     <!-- Schema.org JSON-LD Structured Data -->
     <script type="application/ld+json" is:inline set:html={JSON.stringify(schemaData)} />
 
-    <!-- Google Fonts: Inter & Material Symbols -->
+    <!-- Google Fonts: Inter (Non-blocking with preconnect) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
       rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      media="print"
+      onload="this.setAttribute('media', 'all')"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      />
+    </noscript>
   </head>
   <body>
     <Navbar currentPath={currentPath} />
