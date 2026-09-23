@@ -32,7 +32,8 @@ const { currentPath = Astro.url.pathname } = Astro.props;
         href="/detalle" 
         class={`nav-link ${currentPath === '/detalle' || currentPath.startsWith('/detalle') ? 'active' : ''}`}
       >
-        Detalles y Fotos
+        <span class="nav-text-full">Detalles y Fotos</span>
+        <span class="nav-text-compact">Detalles</span>
       </a>
       <a 
         href="/contacto" 
@@ -158,6 +159,14 @@ const { currentPath = Astro.url.pathname } = Astro.props;
     padding: 0.4rem 0;
     position: relative;
     transition: color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .nav-text-compact {
+    display: none;
+  }
+  .nav-text-full {
+    display: inline;
   }
 
   .nav-link:hover {
@@ -184,6 +193,7 @@ const { currentPath = Astro.url.pathname } = Astro.props;
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    flex-shrink: 0;
   }
 
   /* Theme Toggle Button */
@@ -194,12 +204,14 @@ const { currentPath = Astro.url.pathname } = Astro.props;
     border: 1px solid var(--color-border);
     background-color: var(--color-white);
     color: var(--color-nordic);
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: var(--transition);
     box-shadow: var(--shadow-sm);
+    padding: 0;
+    flex-shrink: 0;
   }
 
   .theme-toggle-btn:hover {
@@ -208,45 +220,55 @@ const { currentPath = Astro.url.pathname } = Astro.props;
     transform: rotate(15deg);
   }
 
-  .theme-toggle-btn span {
-    font-size: 20px;
-  }
-
   :global([data-theme="dark"]) .brand-icon {
     background-color: var(--color-mosque);
     color: #0c1b18;
   }
 
-  /* Icons visibility according to theme */
-  :global(.icon-light) {
-    display: none;
+  /* Icons visibility according to theme - Strong specificity */
+  .theme-toggle-btn :global(.icon-light) {
+    display: none !important;
   }
-  :global(.icon-dark) {
-    display: inline-block;
+  .theme-toggle-btn :global(.icon-dark) {
+    display: block !important;
   }
 
-  :global([data-theme="dark"]) :global(.icon-light) {
-    display: inline-block;
+  :global(html[data-theme="dark"]) .theme-toggle-btn :global(.icon-light),
+  :global([data-theme="dark"]) .theme-toggle-btn :global(.icon-light) {
+    display: block !important;
   }
-  :global([data-theme="dark"]) :global(.icon-dark) {
-    display: none;
+
+  :global(html[data-theme="dark"]) .theme-toggle-btn :global(.icon-dark),
+  :global([data-theme="dark"]) .theme-toggle-btn :global(.icon-dark) {
+    display: none !important;
   }
 
   @media (max-width: 640px) {
     .navbar-container {
-      height: 58px;
+      height: 56px;
+      padding-left: 0.85rem;
+      padding-right: 0.85rem;
     }
     .brand-subtitle {
       display: none;
     }
+    .brand-title {
+      font-size: 0.98rem;
+    }
     .navbar-nav {
-      gap: 0.85rem;
+      gap: 0.65rem;
     }
     .nav-link {
-      font-size: 0.825rem;
+      font-size: 0.82rem;
+    }
+    .nav-text-full {
+      display: none;
+    }
+    .nav-text-compact {
+      display: inline;
     }
     .navbar-actions {
-      gap: 0.5rem;
+      gap: 0.45rem;
     }
     .navbar-actions :global(.btn span) {
       display: none;
@@ -254,6 +276,43 @@ const { currentPath = Astro.url.pathname } = Astro.props;
     .navbar-actions :global(.btn) {
       padding: 0.45rem;
       border-radius: var(--radius-full);
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .navbar-container {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+    .brand-icon {
+      width: 30px;
+      height: 30px;
+    }
+    .brand-title {
+      font-size: 0.88rem;
+    }
+    .navbar-nav {
+      gap: 0.45rem;
+    }
+    .nav-link {
+      font-size: 0.76rem;
+    }
+    .navbar-actions {
+      gap: 0.35rem;
+    }
+    .theme-toggle-btn {
+      width: 32px;
+      height: 32px;
+    }
+    .navbar-actions :global(.btn) {
+      width: 32px;
+      height: 32px;
+      padding: 0.35rem;
     }
   }
 </style>

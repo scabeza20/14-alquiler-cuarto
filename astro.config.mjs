@@ -4,6 +4,7 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://alquiler-tocumen-la-siesta.vercel.app',
   output: 'static',
   adapter: vercel()
 });

@@ -241,20 +241,27 @@ const { images } = Astro.props;
   /* Thumbnails */
   .thumbnails-container {
     width: 100%;
+    max-width: 100%;
     overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
     scrollbar-width: thin;
     scrollbar-color: var(--color-border) transparent;
-    padding-bottom: 0.35rem;
+    padding-bottom: 0.5rem;
+    padding-top: 0.15rem;
   }
 
   .thumbnails-track {
     display: flex;
     gap: 0.65rem;
+    width: max-content;
   }
 
   .thumb-btn {
     position: relative;
     flex: 0 0 95px;
+    flex-shrink: 0;
     aspect-ratio: 4 / 3;
     border-radius: var(--radius-md);
     overflow: hidden;
@@ -264,6 +271,7 @@ const { images } = Astro.props;
     background: none;
     opacity: 0.65;
     transition: var(--transition);
+    scroll-snap-align: start;
   }
 
   .thumb-btn img {
@@ -300,12 +308,15 @@ const { images } = Astro.props;
       aspect-ratio: 4 / 3;
       max-height: 280px;
     }
+    .thumbnails-track {
+      gap: 0.45rem;
+    }
     .thumb-btn {
-      flex: 0 0 75px;
+      flex: 0 0 68px;
     }
     .gallery-nav-btn {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
     }
     .gallery-nav-btn.prev {
       left: 0.5rem;

@@ -288,15 +288,20 @@ import { property } from '../data/property';
   /* Layout Grid */
   .details-layout {
     display: grid;
-    grid-template-columns: 1fr 340px;
+    grid-template-columns: minmax(0, 1fr) 340px;
     gap: 1.75rem;
     align-items: start;
+    width: 100%;
+    max-width: 100%;
   }
 
   .main-column {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
   }
 
   /* Header */
@@ -337,6 +342,9 @@ import { property } from '../data/property';
   /* Gallery Wrapper */
   .gallery-wrapper {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
   }
 
   /* Features Grid */
@@ -783,7 +791,7 @@ import { property } from '../data/property';
   /* Responsive Queries */
   @media (max-width: 1024px) {
     .details-layout {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
     .sidebar-sticky {
       position: static;
